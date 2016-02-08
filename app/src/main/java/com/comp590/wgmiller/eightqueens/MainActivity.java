@@ -74,25 +74,29 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void getAll(View v){
+        solutions = new ArrayList<int[][]>();
         int t = col;
         solveAll(g);
         showPop(solutions.size() + " solutions!");
         col = t;
         final NumberPicker np = new NumberPicker(MainActivity.this);
         np.setMinValue(0);
-        np.setMaxValue(solutions.size());
+        np.setMaxValue(solutions.size() - 1);
         int d = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 40, getResources().getDisplayMetrics());
-        np.setLayoutParams(new GridLayoutManager.LayoutParams(d, d));
+        int h = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 100, getResources().getDisplayMetrics());
+        np.setLayoutParams(new GridLayoutManager.LayoutParams(d, h));
         g.addView(np);
         np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener(){
                                          //@Override
                                          public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                                             setBoard(newVal - 1);
+                                             setBoard(newVal);
+                                             //showPop("Pick a board");
                                          }
                                      }
         );
+        showPop("<-- Pick a board");
 
-        solutions = new ArrayList<int[][]>();
+        //solutions = new ArrayList<int[][]>();
     }
     public boolean solveAll(View v){
         //solutions = new ArrayList<int[][]>();
@@ -146,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
         int board[][] = solutions.get(p);
         for (int j= 0; j < 8; j++) {
             for (int i = 0; i < 8; i++) {
-                if(board[i][j] == 0){
+                if(board[i][j] == 1){
                     spots[i][j].setText("♛");
                 }
                 else{
